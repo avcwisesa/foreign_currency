@@ -88,6 +88,3 @@ datetime input are in RFC3339 format
 - all required input is always given
 - frontend always give 00:00:00.000Z for time part
 - dialy exchange rate can only be deleted directly from database
-
-## TODO
-- add DB model documentation
