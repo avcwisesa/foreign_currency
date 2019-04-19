@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "mode: atomic" > coverage.out
 
-PACKAGES=(database)
+PACKAGES=(database controller)
 
 for pkg in ${PACKAGES[@]}; do
 	echo $pkg

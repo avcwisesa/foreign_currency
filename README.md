@@ -8,5 +8,6 @@ This back-end APIs are to be used by front-end engineers to develop an applicati
 - add DB model documentation
 - add API documentation
 
+assume all required input is always given
 can only delete from DB directly
 date input format time.RFC3339
