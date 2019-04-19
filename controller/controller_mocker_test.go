@@ -27,3 +27,15 @@ func (dm *DBMock) AddTrackedExchange(trackedExchange m.TrackedExchange) (m.Track
 
 	return trackedExchange, nil
 }
+
+func (dm *DBMock) GetExchangeRate(from string, to string, date time.Time) (m.ExchangeRate, error) {
+	return m.ExchangeRate{}, nil
+}
+
+func (dm *DBMock) GetTrackedExchangeList(user string) ([]m.TrackedExchange, error) {
+	return nil, nil
+}
+
+func (dm *DBMock) DeleteTrackedExchange(from string, to string, user string) (m.ExchangeRate, error) {
+	return m.ExchangeRate{}, nil
+}

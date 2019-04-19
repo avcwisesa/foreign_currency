@@ -2,6 +2,7 @@ package database
 
 import (
 	"errors"
+	"time"
 
 	"github.com/jinzhu/gorm"
 
@@ -12,6 +13,9 @@ type Database interface {
 	Migrate(interface{})
 	AddExchangeRate(m.ExchangeRate) (m.ExchangeRate, error)
 	AddTrackedExchange(m.TrackedExchange) (m.TrackedExchange, error)
+	GetExchangeRate(string, string, time.Time) (m.ExchangeRate, error)
+	GetTrackedExchangeList(string) ([]m.TrackedExchange, error)
+	DeleteTrackedExchange(string, string, string) ([]m.TrackedExchange, error)
 }
 
 type database struct {
@@ -66,4 +70,16 @@ func (d *database) AddTrackedExchange(trackedExchange m.TrackedExchange) (m.Trac
 	}).First(&trackedExchange)
 
 	return trackedExchange, nil
+}
+
+func (d *database) GetExchangeRate(from string, to string, date time.Time) (m.ExchangeRate, error) {
+	return m.ExchangeRate{}, nil
+}
+
+func (d *database) GetTrackedExchangeList(user string) ([]m.TrackedExchange, error) {
+	return nil, nil
+}
+
+func (d *database) DeleteTrackedExchange(from string, to string, user string) ([]m.TrackedExchange, error) {
+	return nil, nil
 }
