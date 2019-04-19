@@ -63,10 +63,10 @@ func (cs *ControllerSuite) TestAddExchangeRateOnTimeoutError() {
 	defer cancel()
 
 	r := gin.Default()
-	r.GET("/exchangeRate/add", cs.controller.AddExchangeRate)
+	r.POST("/exchangeRate/add", cs.controller.AddExchangeRate)
 	w := performRequest(
 		r,
-		"GET",
+		"POST",
 		"/exchangeRate/add?from=USD&to=IDR&date=2019-01-01T00:00:00.000Z&rate=0.1231",
 		nil,
 		ctx,
@@ -80,10 +80,10 @@ func (cs *ControllerSuite) TestAddExchangeRateOnDuplicateError() {
 	defer cancel()
 
 	r := gin.Default()
-	r.GET("/exchangeRate/add", cs.controller.AddExchangeRate)
+	r.POST("/exchangeRate/add", cs.controller.AddExchangeRate)
 	w := performRequest(
 		r,
-		"GET",
+		"POST",
 		"/exchangeRate/add?from=USD&to=IDR&date=2019-01-01T00:00:00.000Z&rate=0.1231",
 		nil,
 		ctx,
