@@ -2,6 +2,7 @@ package controller_test
 
 import (
 	"errors"
+	"time"
 
 	m "github.com/avcwisesa/foreign_currency/model"
 )
@@ -36,6 +37,6 @@ func (dm *DBMock) GetTrackedExchangeList(user string) ([]m.TrackedExchange, erro
 	return nil, nil
 }
 
-func (dm *DBMock) DeleteTrackedExchange(from string, to string, user string) (m.ExchangeRate, error) {
-	return m.ExchangeRate{}, nil
+func (dm *DBMock) DeleteTrackedExchange(from string, to string, user string) ([]m.TrackedExchange, error) {
+	return nil, nil
 }

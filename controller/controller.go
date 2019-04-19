@@ -11,8 +11,11 @@ import (
 )
 
 type Controller interface {
+	GetExchangeRateHist(*gin.Context)
+	GetTrackedExchanges(*gin.Context)
 	AddExchangeRate(*gin.Context)
 	AddTrackedExchange(*gin.Context)
+	DeleteTrackedExchange(*gin.Context)
 }
 
 type controller struct {
@@ -86,3 +89,17 @@ func (c *controller) AddTrackedExchange(ctx *gin.Context) {
 	return
 }
 
+func (c *controller) GetExchangeRateHist(ctx *gin.Context) {
+	ctx.JSON(404, nil)
+	return
+}
+
+func (c *controller) GetTrackedExchanges(ctx *gin.Context) {
+	ctx.JSON(404, nil)
+	return
+}
+
+func (c *controller) DeleteTrackedExchange(ctx *gin.Context) {
+	ctx.JSON(404, nil)
+	return
+}
