@@ -25,6 +25,23 @@ For running program, use command below:
 go run main.go
 ```
 
+## Domain Model
+
+### Daily Exchange Rate
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `from` | string | Currency code for origin currency |
+| `to` | string | Currency code for target currency |
+| `date` | datetime | Date on which exchange rate was recorded |
+| `rate` | float | Exchange rate on specified date |
+
+### User Tracked Exchange Rate
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `from` | string | Currency code for origin currency |
+| `to` | string | Currency code for target currency |
+| `user` | string | User who track the exchange rate |
+
 ## API Documentation
 
 ### User wants to input daily exchange rate data `POST /exchangeRate/add`
