@@ -12,6 +12,7 @@ import (
 
 type Controller interface {
 	AddExchangeRate(*gin.Context)
+	AddTrackedExchange(*gin.Context)
 }
 
 type controller struct {
@@ -58,6 +59,30 @@ func (c *controller) AddExchangeRate(ctx *gin.Context) {
 	}
 
 	ctx.JSON(200, exchangeRate)
+	return
+}
+
+func (c *controller) AddTrackedExchange(ctx *gin.Context) {
+	select {
+	case <-ctx.Request.Context().Done():
+		ctx.JSON(408, nil)
+		return
+	default:
+	}
+
+	trackedExchange := m.TrackedExchange{
+		From: ctx.Query("from"),
+		To: ctx.Query("to"),
+		User: ctx.Query("user"),
+	}
+
+	trackedExchange, err := c.Database.AddTrackedExchange(trackedExchange)
+	if err != nil {
+		ctx.JSON(409, nil)
+		return
+	}
+
+	ctx.JSON(200, trackedExchange)
 	return
 }
 

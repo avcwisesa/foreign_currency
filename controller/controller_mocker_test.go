@@ -19,3 +19,11 @@ func (dm *DBMock) AddExchangeRate(exchangeRate m.ExchangeRate) (m.ExchangeRate, 
 
 	return exchangeRate, nil
 }
+
+func (dm *DBMock) AddTrackedExchange(trackedExchange m.TrackedExchange) (m.TrackedExchange, error){
+	if trackedExchange.User == "test1" {
+		return m.TrackedExchange{}, errors.New("Error while Querying from database!")
+	}
+
+	return trackedExchange, nil
+}

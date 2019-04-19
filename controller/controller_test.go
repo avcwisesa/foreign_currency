@@ -125,3 +125,54 @@ func (cs *ControllerSuite) TestAddExchangeRateOnRateError() {
 
 	assert.Equal(cs.T(), 400, w.Code, "Code should be 400")
 }
+
+func (cs *ControllerSuite) TestAddTrackedExchangeOnSuccess() {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	r := gin.Default()
+	r.GET("/trackedExchange/add", cs.controller.AddTrackedExchange)
+	w := performRequest(
+		r,
+		"GET",
+		"/trackedExchange/add?from=JPY&to=IDR&user=test",
+		nil,
+		ctx,
+	)
+
+	assert.Equal(cs.T(), 200, w.Code, "Code should be 200")
+}
+
+func (cs *ControllerSuite) TestAddTrackedExchangeOnTimeoutError() {
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Nanosecond)
+	defer cancel()
+
+	r := gin.Default()
+	r.POST("/trackedExchange/add", cs.controller.AddTrackedExchange)
+	w := performRequest(
+		r,
+		"POST",
+		"/trackedExchange/add?from=JPY&to=IDR&user=test",
+		nil,
+		ctx,
+	)
+
+	assert.Equal(cs.T(), 408, w.Code, "Code should be 408")
+}
+
+func (cs *ControllerSuite) TestAddTrackedExchangeOnDuplicateError() {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	r := gin.Default()
+	r.POST("/trackedExchange/add", cs.controller.AddTrackedExchange)
+	w := performRequest(
+		r,
+		"POST",
+		"/trackedExchange/add?from=JPY&to=IDR&user=test1",
+		nil,
+		ctx,
+	)
+
+	assert.Equal(cs.T(), 409, w.Code, "Code should be 409")
+}
