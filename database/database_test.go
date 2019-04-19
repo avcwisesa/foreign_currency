@@ -40,6 +40,14 @@ func (ds *DatabaseSuite) SetupSuite() {
 	}
 
 	ds.database.AddExchangeRate(exchangeRate)
+
+	trackedExchange := m.TrackedExchange{
+		From: "IDR",
+		To: "USD",
+		User: "test1",
+	}
+
+	ds.database.AddTrackedExchange(trackedExchange)
 }
 
 func (ds *DatabaseSuite) TearDownSuite() {
@@ -68,6 +76,30 @@ func (ds *DatabaseSuite) TestAddExchangeRateOnDuplicateError() {
 	}
 
 	_, err := ds.database.AddExchangeRate(exchangeRate)
+
+	assert.NotNil(ds.T(), err, "Error should not be nil!")
+}
+
+func (ds *DatabaseSuite) TestAddTrackedExchangeOnSuccess() {
+	trackedExchange := m.TrackedExchange{
+		From: "IDR",
+		To: "USD",
+		User: "test",
+	}
+
+	_, err := ds.database.AddTrackedExchange(trackedExchange)
+
+	assert.Nil(ds.T(), err, "Error should be nil!")
+}
+
+func (ds *DatabaseSuite) TestAddTrackedExchangeOnDuplicateError() {
+	trackedExchange := m.TrackedExchange{
+		From: "IDR",
+		To: "USD",
+		User: "test1",
+	}
+
+	_, err := ds.database.AddTrackedExchange(trackedExchange)
 
 	assert.NotNil(ds.T(), err, "Error should not be nil!")
 }

@@ -11,6 +11,7 @@ import (
 type Database interface {
 	Migrate(interface{})
 	AddExchangeRate(m.ExchangeRate) (m.ExchangeRate, error)
+	AddTrackedExchange(m.TrackedExchange) (m.TrackedExchange, error)
 }
 
 type database struct {
@@ -44,4 +45,25 @@ func (d *database) AddExchangeRate(exchangeRate m.ExchangeRate) (m.ExchangeRate,
 	}).First(&exchangeRate)
 
 	return exchangeRate, nil
+}
+
+func (d *database) AddTrackedExchange(trackedExchange m.TrackedExchange) (m.TrackedExchange, error) {
+
+	if err := d.client.Where(&m.TrackedExchange{
+		From: trackedExchange.From,
+		To: trackedExchange.To,
+		User: trackedExchange.User,
+	}).First(&m.TrackedExchange{}).Error; err == nil {
+		return m.TrackedExchange{}, errors.New("Overlapping data exists!")
+	}
+
+	d.client.Create(&trackedExchange)
+
+	d.client.Where(&m.TrackedExchange{
+		From: trackedExchange.From,
+		To: trackedExchange.To,
+		User: trackedExchange.User,
+	}).First(&trackedExchange)
+
+	return trackedExchange, nil
 }
