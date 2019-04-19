@@ -99,5 +99,22 @@ func (d *database) GetTrackedExchangeList(user string) ([]m.TrackedExchange, err
 }
 
 func (d *database) DeleteTrackedExchange(from string, to string, user string) ([]m.TrackedExchange, error) {
-	return nil, nil
+
+	trackedExchange := m.TrackedExchange{
+		From: from,
+		To: to,
+		User: user,
+	}
+	if err := d.client.Delete(&trackedExchange).Error; err != nil {
+		return nil, err
+	}
+
+	var trackedExchangeList []m.TrackedExchange
+	if err := d.client.Where(&m.TrackedRate{
+		User: user,
+	}).Find(&trackedExchangeList).Error; err != nil {
+		return nil, err
+	}
+
+	return trackedExchange, nil
 }
