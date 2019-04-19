@@ -4,6 +4,13 @@ This back-end APIs are to be used by front-end engineers to develop an applicati
 
 ## Prerequisites & Setup
 
+- Linux machine with root access
+- Golang - [Go installation](https://golang.org/doc/install)
+
+```
+git clone https://github.com/avcwisesa/foreign_currency
+```
+
 ## Running Test
 
 For running test, use command below:
@@ -66,5 +73,4 @@ datetime input are in RFC3339 format
 - dialy exchange rate can only be deleted directly from database
 
 ## TODO
-- prerequisites
 - add DB model documentation
