@@ -6,23 +6,65 @@ This back-end APIs are to be used by front-end engineers to develop an applicati
 
 ## Running Test
 
+For running test, use command below:
+```
+make test
+```
+
 ## Running Program
+
+For running program, use command below:
+```
+go run main.go
+```
 
 ## API Documentation
 
-### User wants to input daily exchange rate data
-### User has a list of exchange rates to be tracked
-### User wants to see the exchange rate trend from the most recent 7 data points
-### User wants to add an exchange rate to the list
-### User wants to remove an exchange rate from the list
+### User wants to input daily exchange rate data `POST /exchangeRate/add`
+
+| Attribute | Type | Required |
+| --- | --- | --- |
+| `from` | string | yes |
+| `to` | string | yes |
+| `date` | datetime | yes |
+| `rate` | float | yes |
+
+datetime input are in RFC3339 format
+
+### User has a list of exchange rates to be tracked `GET /trackedExchange`
+
+| Attribute | Type | Required |
+| --- | --- | --- |
+| `user` | string | yes |
+
+### User wants to see the exchange rate trend from the most recent 7 data points `GET /exchangeRate`
+
+| Attribute | Type | Required |
+| --- | --- | --- |
+| `from` | string | yes |
+| `to` | string | yes |
+
+### User wants to add an exchange rate to the list `POST /trackedExchange/add`
+
+| Attribute | Type | Required |
+| --- | --- | --- |
+| `from` | string | yes |
+| `to` | string | yes |
+| `user` | string | yes |
+
+### User wants to remove an exchange rate from the list `DELETE /trackedExchange/delete`
+
+| Attribute | Type | Required |
+| --- | --- | --- |
+| `from` | string | yes |
+| `to` | string | yes |
+| `user` | string | yes |
+
+## Assumptions Used in Development
+- all required input is always given
+- frontend always give 00:00:00.000Z for time part
+- dialy exchange rate can only be deleted directly from database
 
 ## TODO
 - prerequisites
-- add assumptions
 - add DB model documentation
-- add API documentation
-
-assume all required input is always given
-assume frontend always give 00:00:00.000Z for time part
-can only delete from DB directly
-date input format time.RFC3339
