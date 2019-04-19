@@ -89,7 +89,7 @@ func (d *database) GetExchangeRate(from string, to string, date time.Time) (m.Ex
 func (d *database) GetTrackedExchangeList(user string) ([]m.TrackedExchange, error) {
 
 	var trackedExchangeList []m.TrackedExchange
-	if err := d.client.Where(&m.TrackedRate{
+	if err := d.client.Where(&m.TrackedExchange{
 		User: user,
 	}).Find(&trackedExchangeList).Error; err != nil {
 		return nil, err
@@ -110,11 +110,11 @@ func (d *database) DeleteTrackedExchange(from string, to string, user string) ([
 	}
 
 	var trackedExchangeList []m.TrackedExchange
-	if err := d.client.Where(&m.TrackedRate{
+	if err := d.client.Where(&m.TrackedExchange{
 		User: user,
 	}).Find(&trackedExchangeList).Error; err != nil {
 		return nil, err
 	}
 
-	return trackedExchange, nil
+	return trackedExchangeList, nil
 }
