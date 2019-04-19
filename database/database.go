@@ -73,7 +73,17 @@ func (d *database) AddTrackedExchange(trackedExchange m.TrackedExchange) (m.Trac
 }
 
 func (d *database) GetExchangeRate(from string, to string, date time.Time) (m.ExchangeRate, error) {
-	return m.ExchangeRate{}, nil
+
+	var exchangeRate m.ExchangeRate
+	if err := d.client.Where(&m.ExchangeRate{
+		From: from,
+		To: to,
+		Date: date,
+	}).First(&exchangeRate).Error; err != nil {
+		return m.ExchangeRate{}, err
+	}
+
+	return exchangeRate, nil
 }
 
 func (d *database) GetTrackedExchangeList(user string) ([]m.TrackedExchange, error) {
