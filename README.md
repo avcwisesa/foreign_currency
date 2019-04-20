@@ -60,6 +60,7 @@ datetime input are in RFC3339 format
 | Attribute | Type | Required |
 | --- | --- | --- |
 | `user` | string | yes |
+| `date` | datetime | yes |
 
 ### User wants to see the exchange rate trend from the most recent 7 data points `GET /exchangeRate`
 
@@ -84,9 +85,9 @@ datetime input are in RFC3339 format
 | `to` | string | yes |
 | `user` | string | yes |
 
-## Assumptions Used in Development
+## Cases Assumed in Development
 - all required input is always given
-- frontend always give 00:00:00.000Z for time part
 - dialy exchange rate can only be deleted directly from database
+- User tracked exchange rate will return "insufficient data" if it has any missing data within the last week
 - Historical exchange rate will return up to last 7 entries of exchange rate (can be less, or have a gap day)
 - Historical exchange rate average and variance computed in front-end service
