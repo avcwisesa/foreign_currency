@@ -16,7 +16,7 @@ type Database interface {
 	GetExchangeRate(string, string, time.Time) (m.ExchangeRate, error)
 	GetExchangeRateHist(string, string) ([]m.ExchangeRate, error)
 	GetTrackedExchangeList(string) ([]m.TrackedExchange, error)
-	DeleteTrackedExchange(string, string, string) ([]m.TrackedExchange, error)
+	DeleteTrackedExchange(m.TrackedExchange) ([]m.TrackedExchange, error)
 }
 
 type database struct {
@@ -112,20 +112,15 @@ func (d *database) GetTrackedExchangeList(user string) ([]m.TrackedExchange, err
 	return trackedExchangeList, nil
 }
 
-func (d *database) DeleteTrackedExchange(from string, to string, user string) ([]m.TrackedExchange, error) {
+func (d *database) DeleteTrackedExchange(trackedExchange m.TrackedExchange) ([]m.TrackedExchange, error) {
 
-	trackedExchange := m.TrackedExchange{
-		From: from,
-		To: to,
-		User: user,
-	}
 	if err := d.client.Delete(&trackedExchange).Error; err != nil {
 		return nil, err
 	}
 
 	var trackedExchangeList []m.TrackedExchange
 	if err := d.client.Where(&m.TrackedExchange{
-		User: user,
+		User: trackedExchange.User,
 	}).Find(&trackedExchangeList).Error; err != nil {
 		return nil, err
 	}

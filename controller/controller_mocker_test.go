@@ -41,6 +41,6 @@ func (dm *DBMock) GetExchangeRateHist(from string, to string) ([]m.ExchangeRate,
 	return nil, nil
 }
 
-func (dm *DBMock) DeleteTrackedExchange(from string, to string, user string) ([]m.TrackedExchange, error) {
+func (dm *DBMock) DeleteTrackedExchange(trackedExchange m.TrackedExchange) ([]m.TrackedExchange, error) {
 	return nil, nil
 }
