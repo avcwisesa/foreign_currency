@@ -14,6 +14,7 @@ type Database interface {
 	AddExchangeRate(m.ExchangeRate) (m.ExchangeRate, error)
 	AddTrackedExchange(m.TrackedExchange) (m.TrackedExchange, error)
 	GetExchangeRate(string, string, time.Time) (m.ExchangeRate, error)
+	GetExchangeRateHist(string, string) ([]m.ExchangeRate, error)
 	GetTrackedExchangeList(string) ([]m.TrackedExchange, error)
 	DeleteTrackedExchange(string, string, string) ([]m.TrackedExchange, error)
 }
@@ -84,6 +85,19 @@ func (d *database) GetExchangeRate(from string, to string, date time.Time) (m.Ex
 	}
 
 	return exchangeRate, nil
+}
+
+func (d *database) GetExchangeRateHist(from string, to string) ([]m.ExchangeRate, error) {
+
+	var exchangeRateHist []m.ExchangeRate
+	if err := d.client.Where(&m.ExchangeRate{
+		From: from,
+		To: to,
+	}).Order("date desc").Limit(7).Find(&exchangeRateHist).Error; err != nil {
+		return nil, err
+	}
+
+	return exchangeRateHist, nil
 }
 
 func (d *database) GetTrackedExchangeList(user string) ([]m.TrackedExchange, error) {

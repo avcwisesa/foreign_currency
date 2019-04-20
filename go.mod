@@ -9,6 +9,7 @@ require (
 	github.com/jinzhu/gorm v1.9.4
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518 // indirect
+	github.com/stretchr/testify v1.2.2
 	github.com/ugorji/go v1.1.4 // indirect
 	golang.org/x/tools v0.0.0-20190418235243-4796d4bd3df0 // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
