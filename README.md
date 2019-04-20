@@ -88,3 +88,5 @@ datetime input are in RFC3339 format
 - all required input is always given
 - frontend always give 00:00:00.000Z for time part
 - dialy exchange rate can only be deleted directly from database
+- Historical exchange rate will return "insufficient data" when missing even one data within the last week
+- Historical exchange rate average and variance computed in front-end service
