@@ -44,7 +44,8 @@ go run main.go
 
 ## API Documentation
 
-### User wants to input daily exchange rate data `POST /exchangeRate/add`
+### User wants to input daily exchange rate data
+`POST /exchangeRate/add`
 
 | Attribute | Type | Required |
 | --- | --- | --- |
@@ -55,21 +56,24 @@ go run main.go
 
 datetime input are in RFC3339 format
 
-### User has a list of exchange rates to be tracked `GET /trackedExchange`
+### User has a list of exchange rates to be tracked
+`GET /trackedExchange`
 
 | Attribute | Type | Required |
 | --- | --- | --- |
 | `user` | string | yes |
 | `date` | datetime | yes |
 
-### User wants to see the exchange rate trend from the most recent 7 data points `GET /exchangeRate`
+### User wants to see the exchange rate trend from the most recent 7 data points
+`GET /exchangeRate`
 
 | Attribute | Type | Required |
 | --- | --- | --- |
 | `from` | string | yes |
 | `to` | string | yes |
 
-### User wants to add an exchange rate to the list `POST /trackedExchange/add`
+### User wants to add an exchange rate to the list
+`POST /trackedExchange/add`
 
 | Attribute | Type | Required |
 | --- | --- | --- |
@@ -77,7 +81,8 @@ datetime input are in RFC3339 format
 | `to` | string | yes |
 | `user` | string | yes |
 
-### User wants to remove an exchange rate from the list `DELETE /trackedExchange/delete`
+### User wants to remove an exchange rate from the list
+`DELETE /trackedExchange/delete`
 
 | Attribute | Type | Required |
 | --- | --- | --- |
