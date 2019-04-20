@@ -97,27 +97,15 @@ func (c *controller) GetExchangeRateHist(ctx *gin.Context) {
 	default:
 	}
 
-	date, err:= time.Parse(time.RFC3339, ctx.Query("date"))
-	if err != nil {
-		ctx.JSON(400, "Use RFC3339 date format!")
-		return
-	}
-
 	from := ctx.Query("from")
 	to := ctx.Query("to")
 
-	year, month, day := date.Date()
-	dateOnly := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
-
-	var exchangeRateHist [10]m.ExchangeRate
-	for i := 0; i < 7; i++ {
-		exchangeRateHist[i], err = c.Database.GetExchangeRate(from, to, dateOnly.AddDate(0, 0, -1*i))
-		if err != nil {
-			ctx.JSON(204, "Insufficient data")
-		}
+	exchangeRateHist, err := c.Database.GetExchangeRateHist(from, to)
+	if err != nil {
+		ctx.JSON(204, "Insufficient data")
 	}
 
-	ctx.JSON(200, exchangeRateHist[:7])
+	ctx.JSON(200, exchangeRateHist)
 	return
 }
 
