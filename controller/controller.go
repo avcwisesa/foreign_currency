@@ -41,6 +41,8 @@ func (c *controller) AddExchangeRate(ctx *gin.Context) {
 		ctx.JSON(400, "Use RFC3339 date format!")
 		return
 	}
+	year, month, day := date.Date()
+	dateNormalized := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
 
 	rate, err := strconv.ParseFloat(ctx.Query("rate"), 64)
 	if err != nil {
@@ -51,7 +53,7 @@ func (c *controller) AddExchangeRate(ctx *gin.Context) {
 	exchangeRate := m.ExchangeRate{
 		From: ctx.Query("from"),
 		To: ctx.Query("to"),
-		Date: date,
+		Date: dateNormalized,
 		Rate: rate,
 	}
 
