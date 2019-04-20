@@ -175,6 +175,25 @@ func (c *controller) GetTrackedExchanges(ctx *gin.Context) {
 }
 
 func (c *controller) DeleteTrackedExchange(ctx *gin.Context) {
-	ctx.JSON(404, nil)
+	select {
+	case <-ctx.Request.Context().Done():
+		ctx.JSON(408, nil)
+		return
+	default:
+	}
+
+	trackedExchange := m.TrackedExchange{
+		From: ctx.Query("from"),
+		To: ctx.Query("to"),
+		User: ctx.Query("user"),
+	}
+
+	trackedExchangeList, err := c.Database.DeleteTrackedExchange(trackedExchange)
+	if err != nil {
+		ctx.JSON(500, nil)
+		return
+	}
+
+	ctx.JSON(200, trackedExchangeList)
 	return
 }
